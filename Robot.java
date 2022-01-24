@@ -77,7 +77,7 @@ class Robot {
   // Needs tests
   private boolean outsideBoard(int x, int y) {
     boolean outside = false;
-    if (x >= dimX || x < 0 || y >= dimY || y < 0){
+    if (x >= this.dimX || x < 0 || y >= this.dimY || y < 0){
       outside = true;
     }
     return outside;
