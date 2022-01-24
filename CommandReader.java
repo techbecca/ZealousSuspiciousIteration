@@ -3,8 +3,9 @@ import java.util.*;
 
 public class CommandReader {
   String filename;
+  LinkedList<String> strings;
   LinkedList<String> commandSet;
-  LinkedList<List<String>> commandSets;
+  LinkedList<LinkedList<String>> commandSets;
   /* Desired functionality
       - import file
       - parse file
@@ -15,11 +16,12 @@ public class CommandReader {
 
   public CommandReader(String filename) {
     this.filename = filename;
-    this.commandSet = null;
-    this.commandSets = null;
+    this.commandSet = new LinkedList<String>();
+    this.commandSets = new LinkedList<LinkedList<String>>();
+    this.strings = new LinkedList<String>();
   }
 
-  public LinkedList<List<String>> read() {
+  public LinkedList<String> read() {
     try 
     {
       BufferedReader br = new BufferedReader(new FileReader(new File(this.filename)));
@@ -27,25 +29,21 @@ public class CommandReader {
       
       while ((line = br.readLine()) != null) 
       {
-        while(line != "") 
-        {
-          this.commandSet.add(line);
-        }
-        commandSets.add(commandSet);
+        strings.add(line);
       }
-
       br.close();
-      return commandSets;
+      //System.out.println(strings);
+      return strings;
     } 
     catch(FileNotFoundException ex) 
     {
       System.out.println("Unable to open file '" + filename + "'");
-      return null;
+      return strings;
     } 
     catch(IOException ex) 
     {
       System.out.println("Error reading file '" + filename + "'");
-      return null;
+      return strings;
     }
 
   }
