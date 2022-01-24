@@ -6,13 +6,6 @@ public class CommandReader {
   LinkedList<String> strings;
   LinkedList<String> commandSet;
   LinkedList<LinkedList<String>> commandSets;
-  /* Desired functionality
-      - import file
-      - parse file
-      - make list with commands
-      - make array with each set of commands
-
-  */
 
   public CommandReader(String filename) {
     this.filename = filename;
@@ -60,32 +53,35 @@ public class CommandReader {
     return commands;
   }
 
+  public LinkedList<String> getNextSet() {
+    return getNextCommands();
+  }
+
   private void parseCommands() {
     try {
       ListIterator<String> itr = this.strings.listIterator();
       while(itr.hasNext()) {
         String command = itr.next();
-        //System.out.println("Command was " + command);
-        if (!command.isEmpty()) {
-          
+        
+        if (!command.isEmpty()) 
+        {
           this.commandSet.add(command);
-          //System.out.println(commandSet.peekLast());
         }
-        else if (command.isEmpty()) {
-          //System.out.println("Command was == ''");
+        else if (command.isEmpty()) 
+        {
           this.commandSets.add(commandSet);
           this.commandSet = new LinkedList<String>();
-          System.out.println(commandSets.peekLast());
         }
       }
+
       // Add last set to commandSets
-      if (commandSet.size() != 0) {
+      if (commandSet.size() != 0) 
+      {
         this.commandSets.add(commandSet);
-        System.out.println(commandSets.peekLast());
       }
 
     } catch(NullPointerException ex){
-      System.out.println("Error reading command-sets: ");
+      System.out.println("Error reading command sets: ");
     }
   }
   
