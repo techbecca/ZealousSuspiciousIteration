@@ -2,14 +2,18 @@ class Robot {
   private Integer x;
   private Integer y;
   private String direction;
+  private int dimX;
+  private int dimY;
   
   // Robot class properties: position, direction (& constructor)
   // Robot class methods: left, right, move, report, place
 
-  public Robot() {
+  public Robot(int boardDimensionX, int boardDimensionY) {
     this.x = null;
     this.y = null;
     this.direction = "";
+    this.dimX = boardDimensionX;
+    this.dimY = boardDimensionY;
   }
 
   public Integer getX() {
@@ -29,7 +33,6 @@ class Robot {
   }
 
   public void giveCommand(String command){
-    
 
     if (command.contains("PLACE")) 
     {
@@ -60,12 +63,24 @@ class Robot {
   }
 
   private void place(String command) {
+    // TODO: Needs verification to not fall off board
+    //boolean validMove = outsideBoard(x + newX, y + newY);
 
   }
 
   private void move() {
+    // TODO: Needs verification to not fall off board
     
 
+  }
+
+  // Needs tests
+  private boolean outsideBoard(int x, int y) {
+    boolean outside = false;
+    if (x >= dimX || x < 0 || y >= dimY || y < 0){
+      outside = true;
+    }
+    return outside;
   }
 
   private void left() {
