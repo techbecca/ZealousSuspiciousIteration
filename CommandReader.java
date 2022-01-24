@@ -21,7 +21,15 @@ public class CommandReader {
     this.strings = new LinkedList<String>();
   }
 
-  public LinkedList<String> read() {
+  public LinkedList<LinkedList<String>> getCommandSets(){
+    return this.commandSets;
+  }
+
+  public LinkedList<String> getStrings(){
+    return this.strings;
+  }
+
+  public void read() {
     try 
     {
       BufferedReader br = new BufferedReader(new FileReader(new File(this.filename)));
@@ -29,23 +37,56 @@ public class CommandReader {
       
       while ((line = br.readLine()) != null) 
       {
-        strings.add(line);
+        strings.add(line.trim());
       }
+      
       br.close();
-      //System.out.println(strings);
-      return strings;
+      parseCommands();
     } 
     catch(FileNotFoundException ex) 
     {
       System.out.println("Unable to open file '" + filename + "'");
-      return strings;
     } 
     catch(IOException ex) 
     {
       System.out.println("Error reading file '" + filename + "'");
-      return strings;
+
     }
 
+  }
+
+  public LinkedList<String> getNextCommands(){
+    LinkedList<String> commands = this.commandSets.pollFirst();
+    return commands;
+  }
+
+  private void parseCommands() {
+    try {
+      ListIterator<String> itr = this.strings.listIterator();
+      while(itr.hasNext()) {
+        String command = itr.next();
+        //System.out.println("Command was " + command);
+        if (!command.isEmpty()) {
+          
+          this.commandSet.add(command);
+          //System.out.println(commandSet.peekLast());
+        }
+        else if (command.isEmpty()) {
+          //System.out.println("Command was == ''");
+          this.commandSets.add(commandSet);
+          this.commandSet = new LinkedList<String>();
+          System.out.println(commandSets.peekLast());
+        }
+      }
+      // Add last set to commandSets
+      if (commandSet.size() != 0) {
+        this.commandSets.add(commandSet);
+        System.out.println(commandSets.peekLast());
+      }
+
+    } catch(NullPointerException ex){
+      System.out.println("Error reading command-sets: ");
+    }
   }
   
 }
