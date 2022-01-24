@@ -5,8 +5,13 @@ class Robot {
   private int dimX;
   private int dimY;
   
-  // Robot class properties: position, direction (& constructor)
-  // Robot class methods: left, right, move, report, place
+  public Robot() {
+    this.x = null;
+    this.y = null;
+    this.direction = "";
+    this.dimX = 5;
+    this.dimY = 5;
+  }
 
   public Robot(int boardDimensionX, int boardDimensionY) {
     this.x = null;
@@ -63,15 +68,51 @@ class Robot {
   }
 
   private void place(String command) {
-    // TODO: Needs verification to not fall off board
-    //boolean validMove = outsideBoard(x + newX, y + newY);
+    String[] commandSplit = command.split(" ");
+    String[] posStrings = commandSplit[1].split(",");
+    
+    Integer newX = Integer.valueOf(posStrings[0]);
+    Integer newY = Integer.valueOf(posStrings[1]);
+    String newDirection = posStrings[2];    
 
+    if (!outsideBoard(newX, newY)) {
+      this.x = newX;
+      this.y = newY;
+      this.direction = newDirection;
+    }
   }
 
   private void move() {
-    // TODO: Needs verification to not fall off board
-    
+    Integer newX = this.x;
+    Integer newY = this.y;
 
+    switch(this.direction){
+      case "NORTH":
+        newX = this.x;
+        newY = this.y + 1;
+        break;
+      case "WEST":
+        newX = this.x - 1;
+        newY = this.y;
+        break;
+      case "SOUTH":
+        newX = this.x;
+        newY = this.y - 1;
+        break;
+      case "EAST":
+        newX = this.x + 1;
+        newY = this.y;
+        break;
+      default:
+        System.out.println("Direction unkown");
+        break;
+    }
+
+    if (!outsideBoard(newX, newY)) {
+      this.x = newX;
+      this.y = newY;
+    }
+   
   }
 
   // Needs tests
